@@ -17,13 +17,13 @@ x1_range = np.linspace(np.min(X[:, 0]), np.max(X[:, 0]), 100)
 x2_range = np.linspace(np.min(X[:, 1]), np.max(X[:, 1]), 100)
 
 # Create a meshgrid
-xx, yy = np.meshgrid(x1_range, x2_range)
+xx1, xx2 = np.meshgrid(x1_range, x2_range)
 
 # Use the model to calculate the decision function over the grid
-Z_values = model.decision_function(np.c_[xx.ravel(), yy.ravel()])
-Z_values = Z_values.reshape(xx.shape)
+Z_values = model.decision_function(np.c_[xx1.ravel(), xx2.ravel()])
+Z_values = Z_values.reshape(xx1.shape)
 
-plt.contour(xx, yy, Z_values, levels=[0], linewidths=2, colors='k')
+plt.contour(xx1, xx2, Z_values, levels=[0], linewidths=2, colors='k')
 plt.scatter(X[:, 0], X[:, 1], c=Y)
 
 plt.show()
