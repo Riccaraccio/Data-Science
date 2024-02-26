@@ -7,13 +7,12 @@ x = np.arange(-4,4+h,h)
 y = np.arange(-4,4+h,h)
 
 X,Y = np.meshgrid(x,y)
+Fquad = np.power(X,2) + 3*np.power(Y,2)
 
 ## Gradient Descent
 x = np.zeros(10)
 y = np.zeros(10)
 f = np.zeros(10)
-
-Fquad = np.power(X,2) + 3*np.power(Y,2)
 
 x[0] = 3  # Initial guess
 y[0] = 2 
