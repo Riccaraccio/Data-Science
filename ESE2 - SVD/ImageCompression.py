@@ -13,9 +13,9 @@ S = np.diag(S) #SVD returns the vector on the diagonal, we need to reconstruct t
 i = 1 #figure index
 
 for r in (5 , 20 , 100): #define the truncation rank r
-    compressedImage = U[:,:r] @ S[:r, :r] @ Vt[:r, :] #@ operator performs matrix multiplication
+    compressed_image = U[:,:r] @ S[:r, :r] @ Vt[:r, :] #@ operator performs matrix multiplication
     plt.subplot(1, 4, i) #create subplot 
-    plt.imshow(compressedImage, cmap="grey") # plot current compressed image
+    plt.imshow(compressed_image, cmap="grey") # plot current compressed image
     plt.title("r = " + str(r))
     plt.axis("off")
     i += 1 #increase subplot index
