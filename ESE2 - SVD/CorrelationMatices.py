@@ -1,17 +1,19 @@
 import numpy as np
-import scipy # to load the matrix
 import matplotlib.pyplot as plt
+from sklearn.datasets import fetch_olivetti_faces
 
-mat_content = scipy.io.loadmat("allFaces.mat") #load matrix file
-X = mat_content["faces"] #data is in colum "faces" of mat_content
-print(X.shape)
+faces, _ = fetch_olivetti_faces(return_X_y=True, shuffle=True, random_state=0) #load the Olivetti faces dataset
+print(faces.shape)
 
-plt.imshow(np.reshape(X[:,0],(168,192)).T,cmap="grey") #print the 1st face
+n_samples, n_features = faces.shape
+image_shape = (64, 64) # the images are 64x64 pixels
+
+plt.imshow(faces[1].reshape(image_shape),cmap="grey") #print the 1st face
 plt.show()
 
 #CORRELATION MATRIX
-A = np.concatenate((X[:,0:3], X[:, 64:67]),axis=1) #three face from 2 differnet person, 64 each
-
+A = faces[:5,:] #three face from 2 differnet person, 64 each
+print(A.shape)
 CorrMatrix =  A.T @ A
 
 plt.imshow(CorrMatrix,cmap="grey")
@@ -20,7 +22,7 @@ plt.show()
 
 # REF FACE
 plt.subplot(1,3,1)
-plt.imshow(np.reshape(A[:,1],(168,192)).T,cmap="grey")
+plt.imshow(A[1,:].reshape(image_shape).T,cmap="grey")
 
 #LOOK ALIKE FACE
 plt.subplot(1,3,2)
