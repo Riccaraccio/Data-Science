@@ -10,8 +10,8 @@ print(housing_value.shape)
 
 
 plt.scatter(housing_data[:,0],housing_value,s=1)
-plt.xlabel('Median Income (x10000)') #set the x-axis label
-plt.ylabel('Median House Value (x100000)') #set the y-axis label
+plt.xlabel('Median Income (x1e4)') #set the x-axis label
+plt.ylabel('Median House Value (x1e5)') #set the y-axis label
 plt.show()
 
 # housing_data = housing_data - np.mean(housing_data, axis=0) #center the data
@@ -21,5 +21,7 @@ x = Vt.T @ np.linalg.inv(np.diag(S)) @ U.T @ housing_value # fit parameters infl
 
 x_tick = range(len(x)-1)+np.ones(len(x)-1) #create the x-ticks
 plt.bar(x_tick, x[:-1], width=0.5) #plot the bar chart
+plt.xlabel('Feature') #set the x-axis label
+plt.ylabel('Influence') #set the y-axis label
 plt.show()
 
