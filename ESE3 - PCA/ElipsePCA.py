@@ -13,9 +13,8 @@ R = np.array([[np.cos(theta), -np.sin(theta)],     # Rotation matrix
 nPoints = 10000            # Create 10,000 points
 X = R @ np.diag(sig) @ np.random.randn(2,nPoints) + np.diag(xC) @ np.ones((2,nPoints))
 
-plt.plot(X[0,:],X[1,:], '.', color='k') #plot X
-plt.xlim((-6, 8))
-plt.ylim((-6,8))
+plt.scatter(X[0,:],X[1,:], color='k') #plot X
+plt.axis('equal')
 plt.grid()
 #plt.show()
 
@@ -31,9 +30,11 @@ U, S, VT = np.linalg.svd(B/np.sqrt(nPoints),full_matrices=False) #Divide by sqrt
 # print(U) # Print(R) they are very similar 
 # print(S) # Sigma values recovered from the S matix
 
+# range of theta for the ellipse
 theta = 2 * np.pi * np.arange(0,1,0.01)
 
 # 1-std confidence interval
+# PC are scaled by the singualr values, multiplied by the standard circle
 Xstd = U @ np.diag(S) @ np.array([np.cos(theta),np.sin(theta)])
 
 plt.plot(Xavg[0] + Xstd[0,:], Xavg[1] + Xstd[1,:],'-',color='r',linewidth=3)
