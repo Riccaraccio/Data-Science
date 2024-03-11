@@ -31,7 +31,7 @@ def calculate_bic(beta, sigma_sq, y_true, x):
     return bic
 
 diabetes = load_diabetes()
-X_train, X_test, y_train, y_test = train_test_split(diabetes.data, diabetes.target, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(diabetes.data, diabetes.target, test_size=0.3, random_state=0)
 
 df = pd.read_excel('DATA SCIENCE _linear regression cup.xlsx')   
 df = df.rename(columns={"Beta parameters": 'beta', 'Declare your overall score': 'score'})

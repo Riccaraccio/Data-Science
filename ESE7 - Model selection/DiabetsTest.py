@@ -38,7 +38,7 @@ y = diabetes.target
 # Pad X with ones for the intercept term
 X = np.pad(X, ((0, 0), (0, 1)), mode='constant', constant_values=1)
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
 def model_construction(X, y) -> np.ndarray:
     
