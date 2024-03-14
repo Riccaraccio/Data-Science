@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model
-from sklearn import model_selection
 
 np.random.seed(0) #set the seed for the random number generator
 A = np.random.randn(100,10) # Matrix of possible predictors
