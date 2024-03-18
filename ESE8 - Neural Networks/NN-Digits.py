@@ -3,8 +3,9 @@ from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
 
 # Load the digits dataset
-digits = load_digits()
-X, y = digits.data, digits.target
+digits_images, digits_target = load_digits(return_X_y=True)
+X = digits_images
+y = digits_target
 
 # Convert y to a one-hot encoded vector
 y = tf.keras.utils.to_categorical(y, num_classes=10)
