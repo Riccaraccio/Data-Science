@@ -31,12 +31,12 @@ net.summary()
 
 # Train the model
 n_epochs = 15
-net.fit(X_train, y_train, epochs=n_epochs) 
+history = net.fit(X_train, y_train, epochs=n_epochs) 
 #epochs is the number of times the model is trained on the entire dataset
 
 import matplotlib.pyplot as plt 
 
-plt.plot(net.history.history['accuracy'])
+plt.plot(history.history['accuracy'])
 plt.title('Model accuracy')
 plt.ylabel('Accuracy')
 plt.xlabel('Epoch')
