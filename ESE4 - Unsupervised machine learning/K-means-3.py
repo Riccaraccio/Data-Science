@@ -8,7 +8,7 @@ X, Y = make_moons(n_samples=200, noise=0.05, random_state=0)
 #kmeans 
 kmeans = KMeans(n_clusters=2) #initiate and n cluster declaration
 kmeans.fit(X) #fit points
-y_kmeans = kmeans.predict(X) # recover classification
+y_kmeans = kmeans.labels_ # recover classification
 
 plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
 
