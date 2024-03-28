@@ -8,7 +8,7 @@ X, Y = make_blobs(n_samples=200, centers=5, cluster_std=0.6, random_state=0)
 #kmeans 
 kmeans = KMeans(n_clusters=5) #initiate and n cluster declaration
 kmeans.fit(X) #fit points
-y_kmeans = kmeans.predict(X) # recover classification
+y_kmeans = kmeans.labels_ #labels of each point
 
 plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
 
