@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 # Load the dataset
 print("Loading dataset...")
-dataset = fetch_lfw_people(min_faces_per_person=20) 
+dataset = fetch_lfw_people(min_faces_per_person=70) 
 print("Dataset loaded.")
 
 # Split the dataset
@@ -15,6 +15,7 @@ X = dataset.data
 y = dataset.target
 
 """
+# Print the shape of the data and look at a sample image
 print(X.shape)
 
 index = 1
@@ -22,6 +23,7 @@ plt.imshow(X[index].reshape(62, 47), cmap='gray')
 plt.title(dataset.target_names[y[index]])
 plt.show()
 """
+
 # transform the target variable to a one-hot encoded vector
 y = tf.keras.utils.to_categorical(y, num_classes=len(dataset.target_names))
 
@@ -34,7 +36,7 @@ net = tf.keras.models.Sequential([
     tf.keras.Input(shape=(X_train.shape[1],)),  # Input layer with shape of the input data
     tf.keras.layers.Dense(128, activation="relu"),  # Hidden layer with 128 units and relu activation
     tf.keras.layers.Dense(64, activation="relu"),  # Hidden layer with 64 units and relu activation
-    tf.keras.layers.Dense(len(dataset.target_names), activation="softmax"),  # Output layer with 1 units
+    tf.keras.layers.Dense(len(dataset.target_names), activation="softmax"),  # Output layer with units equal to the number of different people
 ])
 
 # Compile the model
@@ -57,6 +59,7 @@ net2 = tf.keras.models.Sequential([
     tf.keras.layers.Flatten(),  # Flatten layer to convert the 2D output to 1D
     tf.keras.layers.Dense(len(dataset.target_names), activation="softmax"),  # Output layer with 1 units
 ])
+
 """
 # Add dropout layers to the model
 
@@ -71,6 +74,7 @@ net2 = tf.keras.models.Sequential([
     tf.keras.layers.Dense(len(dataset.target_names), activation="softmax")  # Output layer with softmax activation
 ])
 """
+
 # Compile the model
 net2.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
@@ -80,7 +84,6 @@ net2.fit(X_train, y_train, epochs=15, batch_size=16)
 # Evaluate the model on the test set
 loss, accuracy = net2.evaluate(X_test, y_test)
 print(f"Test accuracy: {accuracy:.2f}")
-
 
 import numpy as np
 
