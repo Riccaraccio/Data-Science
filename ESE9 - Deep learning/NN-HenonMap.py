@@ -37,8 +37,7 @@ plt.plot (range(1, n+1), Y, '-o', markersize=1, color='red')
 plt.show()
 """
 
-# Load the model
-
+# Load the model if it exists, otherwise train it
 try:
     net = tf.keras.models.load_model('henon_map.keras')
 except:
@@ -55,10 +54,15 @@ except:
     for i in range(1,n):
         X[:,i] = 1 - a*X[:,i-1]**2 + Y[:,i-1]
         Y[:,i] = b*X[:,i-1]
+    
+    """
+    # Find the overflow points
+    overflow = np.where(np.abs(X[:,]) > 100)[0]  # Get indices of overflow
 
-    # generate pair of input and output data
-    # nn_input  = np.zeros((n,2))
-    # nn_output = np.zeros((n,2))
+    # Plot the overflow initial points
+    plt.scatter(X[overflow, 0], Y[overflow, 0], marker='o', color='black', s=1)
+    plt.show()
+    """
 
     nn_input = np.column_stack((X[0,:-1], Y[0,:-1])) # For the first vector
     nn_output = np.column_stack((X[0,1:], Y[0,1:]))
@@ -68,14 +72,9 @@ except:
         nn_input = np.vstack((nn_input, np.column_stack((X[i,:-1], Y[i,:-1]))))
         nn_output = np.vstack((nn_output, np.column_stack((X[i,1:], Y[i,1:]))))
 
-
-    # print(nn_input.shape, nn_output.shape)
     # Split the data into training and test sets
-
     from sklearn.model_selection import train_test_split
     input_train, input_test, output_train, output_test = train_test_split(nn_input, nn_output, test_size=0.2, random_state=42)
-
-    # print(input_train.shape, input_test.shape, output_train.shape, output_test.shape)
 
     # Create a neural network
     net = tf.keras.models.Sequential([
@@ -126,9 +125,11 @@ Y_true[0] = Y0
 for i in range(1, n):
     X_true[i] = 1 - a*X_true[i-1]**2 + Y_true[i-1]
     Y_true[i] = b*X_true[i-1]
+    
+# Plot the first and last g points   
+g=20
 
 plt.subplot(1, 4, 1)
-g=20
 plt.plot(range(1, g+1), X_predict[:g], '-o', markersize=1, color='black')
 plt.plot(range(1, g+1), X_true[:g], '-o', markersize=1, color='blue')
 
@@ -145,6 +146,7 @@ plt.plot(range(1, g+1), Y_predict[-g:], '-o', markersize=1, color='red')
 plt.plot(range(1, g+1), Y_true[-g:], '-o', markersize=1, color='green')
 plt.show()
 
+# Plot the loss function over the epochs
 plt.plot(history.history['loss'])
 plt.title('Model mean squared error')
 plt.yscale('log')
@@ -153,6 +155,7 @@ plt.xlabel('Epoch')
 plt.xticks(range(0, n_epochs))
 plt.show()
 
+# Plot the predicted Henon map
 plt.scatter(X_predict, Y_predict, color='black', s=1)
 plt.show()
 
