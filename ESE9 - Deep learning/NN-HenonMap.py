@@ -79,9 +79,9 @@ except:
     # Create a neural network
     net = tf.keras.models.Sequential([
         tf.keras.Input(shape=(input_train.shape[1],)),  # Input layer with shape of the input data
-        tf.keras.layers.Dense(10, activation="sigmoid"),  # Hidden layer with 128 units and relu activation
-        tf.keras.layers.Dense(5, activation="relu"),  # Hidden layer with 64 units and relu activation
-        tf.keras.layers.Dense(2, activation="linear")  # Output layer with 1 units
+        tf.keras.layers.Dense(10, activation="sigmoid"),  # Hidden layer with 10 units and relu activation
+        tf.keras.layers.Dense(5, activation="relu"),  # Hidden layer with 5 units and relu activation
+        tf.keras.layers.Dense(2, activation="linear")  # Output layer with 2s units
     ])
 
     # Compile the model
@@ -109,7 +109,7 @@ X_predict[0] = X0
 Y_predict[0] = Y0  
 
 # Predict the next point
-print("Predicting the next point...")
+print("Predicting the test-case series...")
 for i in range(1, n):
 
     prediction = net.predict(np.array([[X_predict[i-1], Y_predict[i-1]]]), verbose=0)
