@@ -5,15 +5,16 @@ import scipy.optimize
 # Underdetermined
 n = 20
 m = 100
+np.random.seed(0) # for reproducibility
 A = np.random.rand(n,m)
 b = np.random.rand(n)
-
-def two_norm(x):
-    return np.linalg.norm(x,ord=2)
 
 #constraied are passed as a list of dictionaries
 # lamda allows to define an anonymous function
 constr = ({'type': 'eq', 'fun': lambda x:  A @ x - b})
+
+def two_norm(x):
+    return np.linalg.norm(x,ord=2)
 
 x0 = np.random.rand(m)
 res = scipy.optimize.minimize(two_norm, x0, method='SLSQP',constraints=constr)
