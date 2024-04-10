@@ -3,9 +3,11 @@ import matplotlib.pyplot as plt
 
 # data
 x = np.arange(1,11)
-# y = np.array ([0.2,0.5,0.3,0.7,1.0,1.5,1.8,2.0,2.3,2.2])
+# y = np.array ([0.2, 0.5, 0.3, 0.7, 1.0,
+#               1.5, 1.8, 2.0, 2.3, 2.2])
 # introduce an outlier
-y = np.array([0.2,0.5,0.3,3.5,1.0,1.5,1.8,2.0,2.3,2.2])
+y = np.array([0.2, 0.5, 0.3, 3.5, 1.0, 
+              1.5, 1.8, 2.0, 2.3, 2.2])
 
 plt.plot(x, y, 'o')
 

@@ -13,17 +13,18 @@ b = np.random.rand(n)
 # lamda allows to define an anonymous function
 constr = ({'type': 'eq', 'fun': lambda x:  A @ x - b})
 
+# minimize(fun,x0,constraints)
 def two_norm(x):
     return np.linalg.norm(x,ord=2)
 
 x0 = np.random.rand(m)
-res = scipy.optimize.minimize(two_norm, x0, method='SLSQP',constraints=constr)
+res = scipy.optimize.minimize(two_norm, x0, constraints=constr)
 x2 = res.x
 
 def one_norm(x):
     return np.linalg.norm(x,ord=1)
 
-res = scipy.optimize.minimize(one_norm, x0, method='SLSQP',constraints=constr)
+res = scipy.optimize.minimize(one_norm, x0, constraints=constr)
 x1 = res.x
 
 fig,axs = plt.subplots(2,2)
