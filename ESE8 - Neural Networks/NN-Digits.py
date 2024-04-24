@@ -22,7 +22,7 @@ net = tf.keras.models.Sequential([
 
 # Compile the model
 net.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
-#optimixer is the algorithm to minimize the loss function
+#optimizer is the algorithm to minimize the loss function
 #loss is the loss function, loss = function(actual, predicted)
 #metrics is the list of metrics to be evaluated by the model during training and testing
 

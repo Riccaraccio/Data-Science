@@ -9,7 +9,6 @@ diabetes_data, diabetes_target= load_diabetes(return_X_y=True)
 X = diabetes_data
 y = diabetes_target
 
-
 # Split the dataset into training and test sets 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -27,7 +26,6 @@ net.compile(optimizer="adam", loss="mean_absolute_error", metrics=["mean_absolut
 
 # Train the model
 n_epochs = 100
-
 history = net.fit(X_train, y_train, epochs=n_epochs, batch_size=16) 
 
 y_pred = net.predict(X_test)
@@ -35,18 +33,15 @@ y_pred = net.predict(X_test)
 fig, ax = plt.subplots(1,2)
 ax[0].plot(y_test, y_pred, 'o')
 ax[0].plot([0, 350], [0, 350], 'r-')
-ax[0].set_xlabel('True value')  # Set x-label
-ax[0].set_ylabel('Predicted value')  # Set y-label
+ax[0].set_xlabel('True value')  
+ax[0].set_ylabel('Predicted value')  
 ax[0].set_title('True vs predicted value')
 
 ax[1].plot(history.history['mean_absolute_error'])
 ax[1].set_title('Model accuracy')
-ax[1].set_ylabel('Mean squared error')  # Set y-label
+ax[1].set_ylabel('Mean absolute error') 
 ax[1].set_xlabel('Epoch')
-
 plt.show()
-
-print(X_train.shape)
 
 mae = net.evaluate(X_test, y_test)
 

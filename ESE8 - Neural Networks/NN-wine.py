@@ -20,14 +20,14 @@ net = tf.keras.models.Sequential([
     tf.keras.Input(shape=(X_train.shape[1],)),  # Input layer with shape of the input data
     tf.keras.layers.Dense(13, activation="selu"),  # Hidden layer with 13 units and selu activation
     tf.keras.layers.Dense(5, activation="relu"),  # Hidden layer with 5 units and selu activation
-    tf.keras.layers.Dense(3, activation="softmax"),  # Output layer with 1 units
+    tf.keras.layers.Dense(3, activation="softmax"),  # Output layer with 3 units
 ])
 
 # Compile the model
 net.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 # Train the model
-net.fit(X_train, y_train, epochs=100, batch_size=2)
+net.fit(X_train, y_train, epochs=100, batch_size=16)
 
 # Evaluate the model on the test set
 loss, accuracy = net.evaluate(X_test, y_test)
