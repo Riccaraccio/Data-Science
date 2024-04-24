@@ -54,5 +54,5 @@ y_pred_pinv = X_test @ w
 
 mae_pinv = np.mean(np.abs(y_test - y_pred_pinv))
 
-print("MaE of neural network: ", mae[0])
+print("MaE of neural network: ", mae)
 print("MaE of pinv regression: ", mae_pinv)
