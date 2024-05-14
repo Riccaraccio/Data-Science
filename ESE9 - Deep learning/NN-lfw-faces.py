@@ -91,25 +91,22 @@ import numpy as np
 conv_output = tf.keras.Model(inputs=net2.inputs, outputs=net2.layers[1].output)(X_train)
 pool_output = tf.keras.Model(inputs=net2.inputs, outputs=net2.layers[2].output)(X_train)
 
-# Choose a random image from the training set
-sample_image_index = np.random.randint(0, len(X_train))
-sample_image_index = 1
+# Choose the first image from the training set
+index = 1
 
 # Plot the original, convoluted, and pooled images
-plt.figure(figsize=(15, 5))
-
 plt.subplot(1, 3, 1)
-plt.imshow(X_train[sample_image_index].reshape(62, 47), cmap='gray')
+plt.imshow(X_train[index].reshape(62, 47), cmap='gray')
 plt.title('Original Image')
 plt.axis('off')
 
 plt.subplot(1, 3, 2)
-plt.imshow(conv_output[sample_image_index, :, :, 0], cmap='inferno')
+plt.imshow(conv_output[index, :, :, 0], cmap='inferno')
 plt.title('Convoluted Image')
 plt.axis('off')
 
 plt.subplot(1, 3, 3)
-plt.imshow(pool_output[sample_image_index, :, :, 0], cmap='inferno')
+plt.imshow(pool_output[index, :, :, 0], cmap='inferno')
 plt.title('Pooled Image')
 plt.axis('off')
 

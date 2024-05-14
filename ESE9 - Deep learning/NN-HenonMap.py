@@ -6,7 +6,7 @@ import tensorflow as tf
 # Model parameters for the Henon map
 a = 1.4
 b = 0.3
-n = 1000  # Number of points
+n = 100  # Number of points
 
 """
 # Generate the Henon map
@@ -40,10 +40,13 @@ plt.show()
 # Load the model if it exists, otherwise train it
 try:
     net = tf.keras.models.load_model('henon_map.keras')
+    model_loaded = True
+    print("MODEL LOADED")
 except:
+    model_loaded = False
     # Generate m vectors of the henon map
     # n x m: 100'000 for light training, 1'000'000 for well training
-    m = 1000 # Number of vectors
+    m = 1000 # Number of vectors, i.e. numnber of different initial points
 
     X = np.zeros((m,n))
     Y = np.zeros((m,n))
@@ -100,8 +103,8 @@ except:
 
 # Generate new data using the trained model
 # Generate the initial point
-X0 = np.random.uniform(0.75, -0.75)
-Y0 = np.random.uniform(0.2, -0.75)
+X0 = np.random.uniform(0.75, -0.75) # random value between 0.75 and -0.75
+Y0 = np.random.uniform(0.2, -0.75) # random value between 0.2 and -0.75
 
 X_predict = np.zeros(n)
 Y_predict = np.zeros(n)
@@ -146,14 +149,15 @@ plt.plot(range(1, g+1), Y_predict[-g:], '-o', markersize=1, color='red')
 plt.plot(range(1, g+1), Y_true[-g:], '-o', markersize=1, color='green')
 plt.show()
 
-# Plot the loss function over the epochs
-plt.plot(history.history['loss'])
-plt.title('Model mean squared error')
-plt.yscale('log')
-plt.ylabel('mean squared error')
-plt.xlabel('Epoch')
-plt.xticks(range(0, n_epochs))
-plt.show()
+if model_loaded == False:
+    # Plot the loss function over the epochs
+    plt.plot(history.history['loss'])
+    plt.title('Model mean squared error')
+    plt.yscale('log')
+    plt.ylabel('mean squared error')
+    plt.xlabel('Epoch')
+    plt.xticks(range(0, n_epochs))
+    plt.show()
 
 # Plot the predicted Henon map
 plt.scatter(X_predict, Y_predict, color='black', s=1)
