@@ -3,7 +3,7 @@ from matplotlib.image import imread #to read the image
 import numpy as np #numpy
 import matplotlib.pyplot as plt #to show the image
 
-image = imread("C:\GitHub\Data-Science2024\ESE2 - SVD\StillLife.jpg")
+image = imread("StillLife.jpg")
 image_grayscale = np.mean(image, axis=-1) #averaging over the last column, the RGB scale
 
 #TAKE THE SVD
