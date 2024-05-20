@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 frames_array = np.load('frames_array.npy')
 print("Frames array shape:", frames_array.shape)
 
-"""# animate the frames
+# animate the frames
 plt.ion()
 for frame in frames_array:
     plt.imshow(frame, cmap='gray')
@@ -13,7 +13,7 @@ for frame in frames_array:
     plt.show()
     plt.pause(0.01)
     plt.clf()
-plt.ioff()"""
+plt.ioff()
 
 # Flatten the frames array
 flattened_frames = frames_array.reshape(frames_array.shape[0], -1).T
@@ -63,7 +63,7 @@ plt.yscale('log')
 plt.show()
 
 # plot the first frame and the reconstructed frame using the first n singular vectors
-n = 10
+n = 35
 
 # Reconstruct the frames using the first n singular vectors
 reconstructed_frames = (U[:, :n] @ np.diag(S[:n]) @ Vt[:n, :])
