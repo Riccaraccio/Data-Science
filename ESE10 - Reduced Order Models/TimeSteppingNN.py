@@ -47,8 +47,6 @@ model = tf.keras.models.Sequential([
 
 model.compile(optimizer='adam', loss='mean_squared_error')
 
-tf.keras.utils.plot_model(model, show_shapes=True)
-
 history = model.fit(input_train, output_train, epochs=1000, batch_size=16)
 
 # Plot the training loss
@@ -72,7 +70,7 @@ plt.subplot(1, 2, 1)
 plt.imshow(predicted_frames[0], cmap='gray')
 plt.title('Prediction')
 
-# Optionally, visualize the corresponding true frame for comparison
+# Visualize the first frame for comparison
 true_frames = phi @ output_test.T
 true_frames = true_frames.T.reshape(-1, frames_array.shape[1], frames_array.shape[2])
 print("True frames shape:", true_frames.shape)
@@ -82,7 +80,7 @@ plt.title('True Frame')
 
 plt.show()
 
-
+#Animate the prediction
 fig, ax = plt.subplots(1, 2)
 
 plt.ion()
