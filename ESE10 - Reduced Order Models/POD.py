@@ -106,6 +106,4 @@ for i in range(reconstructed_frames.shape[0]):
     axs[1].cla()
     axs[2].cla()
 
-plt.show()
-
-#test
+plt.ioff()
