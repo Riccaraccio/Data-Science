@@ -17,9 +17,11 @@ class PINN(tf.keras.Model):
         x = self.hidden_layer3(x)
         return self.output_layer(x)
 
+
 # Define the source term f(x)
 def f(x):
     return tf.sin(np.pi * x)
+
 
 # Define the custom loss function
 def custom_loss(model, x):    
@@ -40,9 +42,11 @@ def boundary_loss(model):
     u_1 = model(tf.constant([[1.0]], dtype=tf.float32)) # u(1)
     return tf.square(u_0) + tf.square(u_1) # squared loss
 
+
 # Define the total loss
 def total_loss(model, x): # total loss = custom loss + boundary loss
     return custom_loss(model, x) + boundary_loss(model)
+
 
 # Training the PINN
 def train(model, x, epochs):
@@ -53,12 +57,12 @@ def train(model, x, epochs):
     x_exact = np.linspace(0, 1, 100).reshape(-1, 1)
     u_exact = 1/np.pi**2 * np.sin(np.pi * x_exact)
     
-    optimizer = tf.keras.optimizers.Adam()
-    for epoch in range(epochs):
-        with tf.GradientTape() as tape:
-            loss = total_loss(model, x)
-        gradients = tape.gradient(loss, model.trainable_variables)
-        optimizer.apply_gradients(zip(gradients, model.trainable_variables))
+    optimizer = tf.keras.optimizers.Adam() # Set the optimizer
+    for epoch in range(epochs): # Loop over the epochs
+        with tf.GradientTape() as g:
+            loss = total_loss(model, x) # Compute the loss
+        gradients = g.gradient(loss, model.trainable_variables) # Compute the gradients
+        optimizer.apply_gradients(zip(gradients, model.trainable_variables)) # Update the weights, zip is used to match the gradients to the variables creating pairs
         
         if epoch % 10 == 0:
             # Plot the current solution
@@ -78,17 +82,14 @@ def train(model, x, epochs):
     # keep the plot open
     plt.show()
 
+
 # Main execution
-if __name__ == "__main__":
-    # Training data (collocation points)
+if __name__ == "__main__": # Execute the main code
+    # Training data (collocation points), shped as a column vector, tf.float32
     x = tf.convert_to_tensor(np.linspace(0, 1, 100).reshape(-1, 1), dtype=tf.float32)
-    print("Training data shape:", x.shape)
     
     # Instantiate the model
     model = PINN()
 
     # Train the model
     train(model, x, epochs=200)
-
-
-    
