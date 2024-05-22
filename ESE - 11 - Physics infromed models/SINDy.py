@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 X = np.load('RosslerAttractor.npy')
 print("Data shape:", X.shape)
 
+# # add noise to the data
+# noise_level = 0.05
+# X = X + noise_level * np.random.randn(*X.shape)
+
 # Plot the 3D trajectory
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
