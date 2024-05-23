@@ -6,13 +6,13 @@ frames_array = np.load('frames_array.npy')
 print("Frames array shape:", frames_array.shape)
 
 # animate the frames
-plt.ion()
+plt.ion() # Turn on interactive mode
 for frame in frames_array:
     plt.imshow(frame, cmap='gray')
     plt.axis('off')
     plt.show()
-    plt.pause(0.01)
-    plt.clf()
+    plt.pause(0.01) # Pause for 0.01 seconds
+    plt.clf() # Clear the current figure
 plt.ioff()
 
 # Flatten the frames array
@@ -26,7 +26,7 @@ print("Shapes of U, S, Vt:", U.shape, S.shape, Vt.shape)
 n = 4
 
 # Plot the first n singular vectors in subplots
-fig, axs = plt.subplots(1, n, figsize=(16, 4))
+fig, axs = plt.subplots(1, n)
 
 for i in range(n):
     # Reshape the i-th left singular vector into the original frame shape
@@ -42,7 +42,7 @@ plt.show()
 plt.imshow(np.diag(S))
 plt.show()
 
-# a(t) 
+# a(t) = S * Vt
 a = np.diag(S) @ Vt
 print(a.shape)
 
@@ -55,12 +55,24 @@ plt.legend()
 plt.show()
 
 # variance of each mode
-
 plt.scatter(range(len(S)), S, marker="o", color="black")
 plt.xlabel('Mode')
 plt.ylabel('Variance')
 plt.yscale('log')
 plt.show()
+
+# plot the second mode behavior
+mode2 = U[:, 1].reshape(-1, 1) @ a[1, :].reshape(1, -1)
+mode2 = mode2.T.reshape(frames_array.shape)
+
+plt.ion()
+for frame in mode2:
+    plt.imshow(frame, cmap='gray')
+    plt.axis('off')
+    plt.show()
+    plt.pause(0.01)
+    plt.clf()
+plt.ioff()
 
 # plot the first frame and the reconstructed frame using the first n singular vectors
 n = 35
@@ -79,8 +91,8 @@ print("Frames array shape:", frames_array.shape)
 # Reshape the reconstructed frames array
 reconstructed_frames = reconstructed_frames.T.reshape(frames_array.shape)
 
-plt.ion()
 # Plot the first frame and the reconstructed frame
+plt.ion()
 fig, axs = plt.subplots(1, 3)
 
 for i in range(reconstructed_frames.shape[0]):
