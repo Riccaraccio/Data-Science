@@ -32,7 +32,7 @@ def custom_loss(model, x):
             u = model(x)
         u_x = gg.gradient(u, x)
     u_xx = g.gradient(u_x, x)        
-    residual = u_xx + f(x) # compute the residual
+    residual = u_xx - f(x) # compute the residual
     return tf.reduce_mean(tf.square(residual)) # compute the mean squared loss
 
 
@@ -55,7 +55,7 @@ def train(model, x, epochs):
     plt.figure()
     # plot the exact solution
     x_exact = np.linspace(0, 1, 100).reshape(-1, 1)
-    u_exact = 1/np.pi**2 * np.sin(np.pi * x_exact)
+    u_exact = -1/np.pi**2 * np.sin(np.pi * x_exact)
     
     optimizer = tf.keras.optimizers.Adam() # Set the optimizer
     for epoch in range(epochs): # Loop over the epochs
@@ -70,8 +70,8 @@ def train(model, x, epochs):
             plt.plot(x, model(x), label="PINN")
             plt.plot(x_exact, u_exact, label="Exact")
             plt.title(f"Epoch {epoch}, Loss: {loss.numpy()}")
-            plt.xlim(-1,2)
-            plt.ylim(-0.1,0.2) 
+            plt.xlim(-0.5,1.5)
+            plt.ylim(-0.2,0.1) 
             plt.xlabel("x")
             plt.ylabel("u(x)")
             plt.legend()
