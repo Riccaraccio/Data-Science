@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # Define the neural network, derived from tf.keras.Model
 class PINN(tf.keras.Model):
     def __init__(self):
-        super(PINN, self).__init__() # Inherit from tf.keras.Model
+        super(PINN, self).__init__() # do the same initialization as the parent class
         self.hidden_layer1 = tf.keras.layers.Dense(20, activation='tanh')
         self.hidden_layer2 = tf.keras.layers.Dense(20, activation='tanh')
         self.hidden_layer3 = tf.keras.layers.Dense(20, activation='tanh')
