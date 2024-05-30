@@ -1,5 +1,4 @@
 import pandas as pd
-import re
 
 # Load the DataFrame
 df = pd.read_excel("satellites.xlsx")
