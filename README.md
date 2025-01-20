@@ -21,7 +21,7 @@ The repository is organized into 12 main modules:
 
 ## Technology Stack
 - Language: Python (100%)
-- Main Libraries: Pandas, NumPy, Scikit-learn (implied by course content)
+- Main Libraries: NumPy, Scikit-learn, TensorFlow
 
 ## Installation and Setup
 1. Clone the repository:
