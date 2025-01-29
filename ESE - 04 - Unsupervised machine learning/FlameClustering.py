@@ -14,6 +14,8 @@ Data Structure
 - Information stored in info.json
 - Grid coordinates stored in X_m.dat and Y_m.dat
 - Physical quantities stored in separate .dat files
+
+Data from: https://blastnet.github.io/sharma2024
 """
 import numpy as np
 import json
