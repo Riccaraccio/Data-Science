@@ -1,43 +1,49 @@
+"""Comparison of L2 (Least Squares) and Lasso Regression.
+
+This code demonstrates the difference between L2 and Lasso regression
+in recovering sparse signals from noisy measurements. It shows how
+Lasso regression can better recover sparse solutions compared to
+standard least squares regression.
+
+The setup involves:
+1. Creating a sparse signal (x) with only two non-zero components
+2. Generating noisy measurements (b) using a random measurement matrix (A)
+3. Attempting to recover x using both L2 and Lasso regression
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn import linear_model
 
-np.random.seed(0) #set the seed for the random number generator
-A = np.random.randn(100,10) # Matrix of possible predictors
-x = np.array([0, 0, 1, 0, 0, 0, -1, 0, 0, 0]) #Two nonzero predictors out of 10
+# Generate synthetic data
+np.random.seed(0)  # For reproducibility
+A = np.random.randn(100,10)  # Random measurement matrix
+x = np.array([0, 0, 1, 0, 0, 0, -1, 0, 0, 0])  # True sparse signal
+b = A @ x + 2*np.random.randn(100)  # Noisy measurements
 
-b = A @ x + 2*np.random.randn(100) #A*x + random noise(dimension = 100)
+# Perform L2 regression (least squares)
+xL2 = np.linalg.pinv(A) @ b  # Using pseudoinverse
+print(xL2)  # Show L2 solution
 
-xL2 = np.linalg.pinv(A) @ b #least square regression
-
-print(xL2) # should return x but doesnt 
-
-# Lasso regression
+# Perform Lasso regression
 reg = linear_model.Lasso(alpha=0.2).fit(A, b)
-
-xLasso = reg.coef_ #get the lasso coefficent x
+xLasso = reg.coef_  # Get Lasso coefficients
 print(xLasso)
 
-# Set the width of the bars
+# Visualize results with bar plot
 bar_width = 0.2
-
-# Create positions for the bars
 bar_positions_x = np.arange(len(x))
 bar_positions_xL2 = bar_positions_x + bar_width
 bar_positions_xLasso = bar_positions_xL2 + bar_width
 
-# Create bar plots for each vector
+# Create comparative bar plot
 plt.bar(bar_positions_x, x, width=bar_width, label='True x')
 plt.bar(bar_positions_xL2, xL2, width=bar_width, label='X regressed with pinv')
 plt.bar(bar_positions_xLasso, xLasso, width=bar_width, label='X regressed with Lasso')
 
-# Add labels and title
 plt.set_cmap("jet")
 plt.xlabel('Index')
 plt.ylabel('Value')
 plt.title('Bar Plot of Vectors')
-
 plt.legend()
-
-# Show the plot
 plt.show()

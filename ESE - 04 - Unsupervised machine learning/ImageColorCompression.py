@@ -1,48 +1,62 @@
-from matplotlib.image import imread #to read the image
+"""Image Color Quantization using K-means Clustering.
+
+This code demonstrates color quantization of an image using K-means clustering,
+reducing the image from millions of possible colors to just 16 colors while
+preserving the main visual features. The process involves:
+1. Converting the image into a collection of RGB points
+2. Clustering these points in RGB space
+3. Replacing each pixel's color with its cluster center
+4. Reconstructing the image with the reduced color palette
+
+The visualization shows both the clustering in RGB space and the
+resulting recolored image.
+"""
+
+from matplotlib.image import imread
 import numpy as np 
 import matplotlib.pyplot as plt 
+from sklearn.cluster import MiniBatchKMeans
 
-image = imread("StillLife.jpg") #import image
-
-data = image.reshape(image.shape[0]*image.shape[1], image.shape[2]) #reshape
+# Load and reshape image
+image = imread("ESE - 04 - Unsupervised machine learning/StillLife.jpg")
+data = image.reshape(image.shape[0]*image.shape[1], image.shape[2])  # Flatten to pixel array
 
 def plot_pixels(data, title, colors=None, N=10000):
-    if colors is None:
-        colors = data
-    
-    # choose a random subset
-    rng = np.random.RandomState(0) #for everyone to get the same results
-    i = rng.permutation(data.shape[0])[:N] #extract N random points
-    colors = colors[i]/255; #normalize color value to be in range (0,1)
-    
-    R, G, B = data[i].T #extract R,G,B value for each pixel
-    
-    fig, ax = plt.subplots(1, 2)
-    ax[0].scatter(R, G, c=colors, marker='.')
-    ax[0].set(xlabel='Red', ylabel='Green', xlim=(0, 255), ylim=(0, 255))
+   if colors is None:
+       colors = data
+   
+   # Sample random subset of pixels
+   rng = np.random.RandomState(0)
+   i = rng.permutation(data.shape[0])[:N]
+   colors = colors[i]/255  # Normalize colors
+   
+   R, G, B = data[i].T  # Extract RGB components
+   
+   # Create scatterplots
+   fig, ax = plt.subplots(1, 2)
+   ax[0].scatter(R, G, c=colors, marker='.')
+   ax[0].set(xlabel='Red', ylabel='Green', xlim=(0, 255), ylim=(0, 255))
 
-    ax[1].scatter(R, B, c=colors, marker='.')
-    ax[1].set(xlabel='Red', ylabel='Blue', xlim=(0, 255), ylim=(0, 255))
+   ax[1].scatter(R, B, c=colors, marker='.')
+   ax[1].set(xlabel='Red', ylabel='Blue', xlim=(0, 255), ylim=(0, 255))
 
-    fig.suptitle(title, size=20)
-    plt.show()
+   fig.suptitle(title, size=20)
+   plt.show()
 
+# Show original color distribution
 plot_pixels(data, title='Input color space: 16 million possible colors')
 
-from sklearn.cluster import MiniBatchKMeans #faster for very large datasets
-kmeans = MiniBatchKMeans(16) #number of clusers
-kmeans.fit(data) #fit data
+# Perform color quantization
+kmeans = MiniBatchKMeans(16)  # Create 16-color palette
+kmeans.fit(data)
+new_colors = kmeans.cluster_centers_[kmeans.predict(data)]
+new_colors = new_colors.astype(int)
 
-# kmeans.predict(data) assigns each data point to a cluster, return Index of the cluster each sample belongs to
-# kmeans.cluster_centers_ gives the centroid of each cluster.
-# kmeans.cluster_centers_[kmeans.predict(data)] effectively retrieves the centroid corresponding to the cluster each data point is assigned to
-new_colors = kmeans.cluster_centers_[kmeans.predict(data)] 
-
-new_colors = new_colors.astype(int) #convert values of the centers to int, (0,255) no floats
+# Show reduced color distribution
 plot_pixels(data, colors=new_colors, title="Reduced color space: 16 colors")
 
+# Compare original and recolored images
 image_recolored = new_colors.reshape(image.shape)
-
 fig, ax = plt.subplots(1, 2)
 ax[0].imshow(image)
 ax[0].set_title('Original Image')

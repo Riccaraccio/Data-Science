@@ -21,7 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load and convert image to grayscale
-image = imread("StillLife.jpg")
+image = imread("ESE - 02 - SVD/StillLife.jpg")
 image_grayscale = np.mean(image, axis=-1)  # Average RGB channels
 
 # Perform SVD decomposition
