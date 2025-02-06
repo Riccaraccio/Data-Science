@@ -9,7 +9,6 @@ with a noise level of 0.05.
 """
 
 import matplotlib.pyplot as plt
-import numpy as np
 from sklearn.datasets._samples_generator import make_moons
 from sklearn.cluster import KMeans
 
