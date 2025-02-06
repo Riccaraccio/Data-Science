@@ -22,8 +22,8 @@ import json
 import matplotlib.pyplot as plt
 import os
 
-# Change working directory to the PCA analysis folder
-os.chdir("ESE - 03 - PCA")
+# Change working directory
+os.chdir("ESE - 04 - Unsupervised machine learning")
 
 # Load metadata containing grid dimensions
 metadata = json.load(open("dataset/info.json"))
@@ -64,18 +64,28 @@ for feature in os.listdir("dataset/data"):
         else:  # Stack subsequent features vertically
             features = np.vstack((features, np.fromfile(f"dataset/data/{feature}", dtype="<f4")))
 
-# Standardize features (zero mean and unit variance)
-from sklearn.preprocessing import StandardScaler
-features = StandardScaler().fit_transform(features)
+features = features.T  # Transpose to match grid dimensions
+
+c = np.mean(features, axis=0)  # Compute mean of each feature
+d = np.std(features, axis=0)  # Compute standard deviation of each feature
+features = (features - c) / d
 
 # Perform K-means clustering with 10 clusters
 from sklearn.cluster import KMeans
-kmeans = KMeans(n_clusters=10)
-kmeans.fit(features.T)  # Transpose features for clustering
+n_clusters = 7
+kmeans = KMeans(n_clusters=n_clusters)
+kmeans.fit(features)  # Transpose features for clustering
 colors = kmeans.labels_.reshape(Nx, Ny).T  # Reshape cluster labels to match grid
 
 # Visualize clustering results
 plt.title("K-means Clustering")
-plt.pcolormesh(Y, X, colors, cmap=plt.get_cmap('viridis', 10))
+plt.pcolormesh(Y, X, colors, cmap=plt.get_cmap('viridis', n_clusters))
 plt.colorbar()
+plt.show()
+
+# Visualize results in temperature vs YOH space
+plt.scatter(YOH.flatten(), T.flatten(),c=colors.flatten(), cmap='viridis', s=1)
+plt.xlabel("YOH")
+plt.ylabel("Temperature (K)")
+plt.title("K-means Clustering in Temperature vs YOH Space")
 plt.show()
