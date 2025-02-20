@@ -27,3 +27,10 @@ The repository is organized into 12 main modules:
 1. Clone the repository:
 ```bash
 git clone https://github.com/Riccaraccio/Data-Science.git
+```
+
+## Other Useful Links
+- This page offers a concise Python programming tutorial that teaches the language basics through practical examples: https://learnxinyminutes.com/python/
+- W3Schools is a popular educational website that provides free tutorials, references, and examples: https://www.w3schools.com/python/
+- Github repository containing free programming books: https://github.com/EbookFoundation/free-programming-books/tree/main
+- Github repository containing ideas for programming exercises: https://github.com/practical-tutorials/project-based-learning
