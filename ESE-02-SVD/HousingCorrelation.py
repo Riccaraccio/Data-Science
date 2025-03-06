@@ -23,6 +23,9 @@ plt.xlabel('Median Income (x1e4)')
 plt.ylabel('Median House Value (x1e5)')
 plt.show()
 
+#Normalize the data
+housing_data = (housing_data - np.mean(housing_data, axis=0)) / np.std(housing_data, axis=0)
+
 # Prepare data for SVD by adding intercept term
 housing_data = np.pad(housing_data, ((0, 0), (0, 1)), mode='constant', constant_values=1)
 
@@ -31,13 +34,16 @@ U, S, Vt = np.linalg.svd(housing_data, full_matrices=False)
 x = Vt.T @ np.linalg.inv(np.diag(S)) @ U.T @ housing_value  # Calculate feature coefficients
 
 # Plot actual vs predicted house values
-plt.plot(housing_value, c="k")
-plt.plot(housing_data @ x, c="r")
-plt.legend(["True", "Fitted"])
+plt.scatter(housing_value, housing_data @ x, s=1)
+plt.plot([0, 5], [0, 5], 'k--')  # Diagonal line for reference
+plt.xlim(0, 6)
+plt.ylim(0, 6)
+plt.xlabel('True House Value (x1e5)')
+plt.ylabel('Predicted House Value (x1e5)')
 plt.show()
 
 # Visualize feature importance
-x_tick = range(len(x)-1) + np.ones(len(x)-1)  # Create x-axis positions
+x_tick = range(1, len(x))# Create x-axis positions
 plt.bar(x_tick, x[:-1], width=0.5)  # Plot feature influences (excluding intercept)
 plt.xlabel('Feature')
 plt.ylabel('Influence')
