@@ -29,29 +29,30 @@ U, S, Vt = np.linalg.svd(image_grayscale, full_matrices=False)
 S = np.diag(S)  # Convert singular values to diagonal matrix
 
 # Create and display compressed versions
-i = 1  # Subplot counter
+fig, ax = plt.subplots(1, 4) # Create 4 subplots 
+i = 0  # Subplot counter
 for r in (5, 20, 100):  # Different compression levels
    compressed_image = U[:,:r] @ S[:r, :r] @ Vt[:r, :]  # Create rank-r approximation
-   plt.subplot(1, 4, i)
-   plt.imshow(compressed_image, cmap="grey")
-   plt.title("r = " + str(r))
-   plt.axis("off")
+   ax[i].imshow(compressed_image, cmap="grey")
+   ax[i].set_title(f"r = {r}")
+   ax[i].axis("off")
    i += 1
 
 # Display original image for comparison
-plt.subplot(1, 4, i)
-plt.imshow(image_grayscale, cmap="grey")
-plt.title("Original Image")
-plt.axis("off")
+ax[i].imshow(image_grayscale, cmap="grey")
+ax[i].set_title("Original Image")
+ax[i].axis("off")
+plt.tight_layout() # Adjust layout for better visualization
 plt.show()
+plt.close() # Close the plot
 
 # Analyze singular values
-plt.subplot(1, 2, 1)
+fig, ax = plt.subplots(1, 2) #create 2 subplots
 
-plt.title("Singular Values")
-plt.semilogy(np.diag(S))  # Plot singular values on log scale
+ax[0].set_title("Singular Values")
+ax[0].semilogy(np.diag(S))  # Plot singular values on log scale
 
-plt.subplot(1, 2, 2)
-plt.title("Cumulative Normalized Sum")
-plt.plot(np.cumsum(np.diag(S))/np.sum(np.diag(S)))  # Show cumulative importance
+ax[1].set_title("Cumulative Normalized Sum")
+ax[1].plot(np.cumsum(np.diag(S))/np.sum(np.diag(S)))  # Show cumulative importance
+plt.tight_layout()
 plt.show()
