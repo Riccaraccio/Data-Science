@@ -30,18 +30,17 @@ S = np.diag(S)  # Convert singular values to diagonal matrix
 
 # Create and display compressed versions
 fig, ax = plt.subplots(1, 4) # Create 4 subplots 
-i = 0  # Subplot counter
-for r in (5, 20, 100):  # Different compression levels
+
+for i, r in enumerate([5, 20, 100]):  # Different compression levels
    compressed_image = U[:,:r] @ S[:r, :r] @ Vt[:r, :]  # Create rank-r approximation
    ax[i].imshow(compressed_image, cmap="grey")
    ax[i].set_title(f"r = {r}")
    ax[i].axis("off")
-   i += 1
 
 # Display original image for comparison
-ax[i].imshow(image_grayscale, cmap="grey")
-ax[i].set_title("Original Image")
-ax[i].axis("off")
+ax[-1].imshow(image_grayscale, cmap="grey")
+ax[-1].set_title("Original Image")
+ax[-1].axis("off")
 plt.tight_layout() # Adjust layout for better visualization
 plt.show()
 plt.close() # Close the plot
