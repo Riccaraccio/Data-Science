@@ -1,21 +1,40 @@
+"""Support Vector Classification for Binary Clustering.
+
+This code performs binary classification on generated data clusters using:
+1. Generating synthetic 2D data with two clusters
+2. Training a Support Vector Classifier with a linear kernel
+3. Creating a decision boundary visualization
+4. Displaying the classification results
+
+The program creates a 2D visualization showing the classified data points
+and the decision boundary that separates the two clusters. The SVM algorithm
+finds the optimal hyperplane that maximizes the margin between classes.
+
+Data Structure
+-------------
+- X: 2D coordinates of data points
+- Y: Binary labels for each data point
+- Z_values: Decision function values over a grid for boundary plotting
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
-from sklearn.datasets._samples_generator import make_blobs #to generate data clusters
+from sklearn.datasets._samples_generator import make_blobs  # to generate data clusters
 
+# Generate synthetic data with two clusters
 X, Y = make_blobs(n_samples=500, centers=2,
                   random_state=0, cluster_std=0.60)
 
-from sklearn.svm import SVC # "Support vector classifier"
+from sklearn.svm import SVC  # "Support vector classifier"
 model = SVC(kernel='linear')
-model.fit(X, Y)
+model.fit(X, Y)  # Train the SVM model on the generated data
 
 # In order to plot the decision boundary, we need to create a grid of points
 # Define the range for the grid
 x1_range = np.linspace(np.min(X[:, 0]), np.max(X[:, 0]), 100)
 x2_range = np.linspace(np.min(X[:, 1]), np.max(X[:, 1]), 100)
 
-# Create a meshgrid
+# Create a meshgrid for evaluation
 xx1, xx2 = np.meshgrid(x1_range, x2_range)
 
 # Use the model to calculate the decision function over the grid
