@@ -11,7 +11,7 @@ The program demonstrates how model performance can change across different
 data batches collected over time, potentially indicating concept drift or
 degradation in sensor performance as batches progress.
 
-Data from:
+Data from (with additional processing):
 Vergara, A., Vembu, S., Ayhan, T., Ryan, M. A., Homer, M. L., & Huerta, R. 
 (2012). Chemical gas sensor drift compensation using classifier ensembles. 
 Sensors and Actuators B Chemical, 166-167, 320-329. 
