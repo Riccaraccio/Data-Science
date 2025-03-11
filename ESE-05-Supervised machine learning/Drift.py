@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
-with open("ESE-05-Supervised machine learning/processed_data/merged_batches.pkl", "rb") as f:
+with open("ESE-05-Supervised machine learning/dataset/dataset.pkl", "rb") as f:
     data = pickle.load(f)
 
 # Extract data from the first batch
@@ -11,7 +11,6 @@ batch1 = data.where(data["batch_id"] == 1).dropna()
 
 batch1_y = batch1["gas_class"].to_numpy()
 batch1_X = batch1[batch1.columns[:-5]].to_numpy()
-
 
 # Split the dataset into training and testing sets
 from sklearn.model_selection import train_test_split
