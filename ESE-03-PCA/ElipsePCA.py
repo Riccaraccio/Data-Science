@@ -25,21 +25,26 @@ nPoints = 10000
 X = R @ np.diag(sig) @ np.random.randn(2,nPoints) + np.diag(xC) @ np.ones((2,nPoints))
 
 # Plot raw data
-plt.scatter(X[0,:], X[1,:], color='k')
+plt.scatter(X[0,:], X[1,:], color='k', s=1)
 plt.title('Raw Data')
 plt.show()
 
 # Center the data
 Xavg = np.mean(X, axis=1)  # Compute centroid
-B = X - Xavg[:, np.newaxis]  # Center the data
+B = X - Xavg.reshape(-1,1)  # Center the data
 
-plt.plot(B[0,:],B[1,:], '.', color='k')
+plt.scatter(B[0,:],B[1,:], color='k', s=1)
 plt.title('Centered Data')
 plt.show()
 
-# Perform SVD for PCA
 # Normalize by sqrt(nPoints) to get standard deviations as singular values
-U, S, VT = np.linalg.svd(B/np.sqrt(nPoints), full_matrices=False)
+B = B / np.sqrt(nPoints)
+plt.scatter(B[0,:],B[1,:], color='k', s=1)
+plt.title('Normalized Data')
+plt.show()
+
+# Perform SVD for PCA
+U, S, VT = np.linalg.svd(B, full_matrices=False)
 
 print(U, R) # Notice how they are very similar 
 print(S) # Sigma values recovered from the S matix
@@ -49,14 +54,15 @@ theta = 2 * np.pi * np.arange(0, 1, 0.01)
 Xstd = U @ np.diag(S) @ np.array([np.cos(theta), np.sin(theta)])
 
 # Plot confidence ellipses at 1, 2, and 3 standard deviations
-plt.plot(Xavg[0] + Xstd[0,:], Xavg[1] + Xstd[1,:], '-', color='r', linewidth=3)
-plt.plot(Xavg[0] + 2*Xstd[0,:], Xavg[1] + 2*Xstd[1,:], '-', color='r', linewidth=3)
-plt.plot(Xavg[0] + 3*Xstd[0,:], Xavg[1] + 3*Xstd[1,:], '-', color='r', linewidth=3)
+plt.plot(Xavg[0] + Xstd[0,:], Xavg[1] + Xstd[1,:], '-', color='r')
+plt.plot(Xavg[0] + 2*Xstd[0,:], Xavg[1] + 2*Xstd[1,:], '-', color='r')
+plt.plot(Xavg[0] + 3*Xstd[0,:], Xavg[1] + 3*Xstd[1,:], '-', color='r')
 
 # Plot principal components
 plt.plot(np.array([Xavg[0], Xavg[0]+U[0,0]*S[0]]),
         np.array([Xavg[1], Xavg[1]+U[1,0]*S[0]]), '-', color='cyan', linewidth=3)
 plt.plot(np.array([Xavg[0], Xavg[0]+U[0,1]*S[1]]),
         np.array([Xavg[1], Xavg[1]+U[1,1]*S[1]]), '-', color='cyan', linewidth=3)
-
+plt.scatter(X[0], X[1], color='k', s=1)
+plt.axis('equal')
 plt.show()
