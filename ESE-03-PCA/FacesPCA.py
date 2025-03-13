@@ -28,29 +28,38 @@ plt.show()
 pca = PCA() 
 pca.fit(faces)
 
-eigenfaces = pca.components_.T  # Each column is an eigenface
-singular_values = pca.singular_values_  # Importance of each eigenface
+eigenfaces = pca.components_  # Each column is an eigenface
+explained_variance = pca.explained_variance_ # Importance of each eigenface
 
 # Visualize top 10 eigenfaces with their singular values
 fig, ax = plt.subplots(2,5)
-for i in range(2):
-   for j in range(5):
-       ax[i,j].imshow(eigenfaces[:,i*5+j].reshape(64,64), cmap='gray')
-       ax[i,j].set_title(str(singular_values[i*5+j].round(2)))
-       ax[i,j].axis('off')
+ax = ax.flatten() # Flatten the 2D array to 1D, for easier indexing
+
+for idx in range(10):
+    ax[idx].imshow(eigenfaces[idx].reshape(64,64), cmap='gray')
+    ax[idx].set_title(f"{explained_variance[idx]:.2f}")
+    ax[idx].axis('off')
+
+plt.tight_layout()
 plt.show()
 
 # Reconstruct a face using first n eigenfaces
 n_eigenfaces = 100
-reconstructed_face = faces[0] @ eigenfaces[:,:n_eigenfaces] @ eigenfaces[:,:n_eigenfaces].T
+
+# Reconstruction using n eigenfaces
+# Project face onto eigenfaces, calculate coefficients for each eigenface
+project_coeff = faces[0] @ eigenfaces[:n_eigenfaces].T
+
+# Reconstruct face using coefficients and eigenfaces
+reconstructed_face = project_coeff @ eigenfaces[:n_eigenfaces]
 
 # Compare original and reconstructed face
-fig, ax = plt.subplots(1, 2)
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
 ax[0].imshow(faces[0].reshape(64,64), cmap='gray')
 ax[0].set_title('Original Face')
 ax[0].axis('off')
 
 ax[1].imshow(reconstructed_face.reshape(64,64), cmap='gray')
-ax[1].set_title('Reconstructed Face')
+ax[1].set_title(f'Reconstructed ({n_eigenfaces} eigenfaces)')
 ax[1].axis('off')
 plt.show()
