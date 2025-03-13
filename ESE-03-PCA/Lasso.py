@@ -19,7 +19,7 @@ from sklearn import linear_model
 np.random.seed(0)  # For reproducibility
 A = np.random.randn(100,10)  # Random measurement matrix
 x = np.array([0, 0, 1, 0, 0, 0, -1, 0, 0, 0])  # True sparse signal
-b = A @ x + 2*np.random.randn(100)  # Noisy measurements
+b = A @ x + np.random.randn(100)  # Noisy measurements
 
 # Perform L2 regression (least squares)
 xL2 = np.linalg.pinv(A) @ b  # Using pseudoinverse
@@ -31,15 +31,13 @@ xLasso = reg.coef_  # Get Lasso coefficients
 print(xLasso)
 
 # Visualize results with bar plot
-bar_width = 0.2
-bar_positions_x = np.arange(len(x))
-bar_positions_xL2 = bar_positions_x + bar_width
-bar_positions_xLasso = bar_positions_xL2 + bar_width
+width = 0.2
+positions = np.arange(len(x))
 
-# Create comparative bar plot
-plt.bar(bar_positions_x, x, width=bar_width, label='True x')
-plt.bar(bar_positions_xL2, xL2, width=bar_width, label='X regressed with pinv')
-plt.bar(bar_positions_xLasso, xLasso, width=bar_width, label='X regressed with Lasso')
+# Create comparative bar plot in one go with fixed offsets
+plt.bar(positions - width, x, width=width, label='True x')
+plt.bar(positions, xL2, width=width, label='X regressed with pinv')
+plt.bar(positions + width, xLasso, width=width, label='X regressed with Lasso')
 
 plt.set_cmap("jet")
 plt.xlabel('Index')
