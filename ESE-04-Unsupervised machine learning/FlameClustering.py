@@ -23,7 +23,7 @@ import matplotlib.pyplot as plt
 import os
 
 # Change working directory
-os.chdir("ESE - 04 - Unsupervised machine learning")
+os.chdir("ESE-04-Unsupervised machine learning")
 
 # Load metadata containing grid dimensions
 metadata = json.load(open("dataset/info.json"))
