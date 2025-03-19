@@ -72,10 +72,13 @@ features = (features - c) / d
 
 # Perform K-means clustering with 10 clusters
 from sklearn.cluster import KMeans
-n_clusters = 7
-kmeans = KMeans(n_clusters=n_clusters)
+n_clusters = 8
+kmeans = KMeans(n_clusters=n_clusters, random_state=0)
 kmeans.fit(features)  # Transpose features for clustering
 colors = kmeans.labels_.reshape(Nx, Ny).T  # Reshape cluster labels to match grid
+
+rng = np.random.RandomState(0)
+indices = rng.permutation(len(features))[:100000]
 
 # Visualize clustering results
 plt.title("K-means Clustering")
@@ -84,7 +87,7 @@ plt.colorbar()
 plt.show()
 
 # Visualize results in temperature vs YOH space
-plt.scatter(YOH.flatten(), T.flatten(),c=colors.flatten(), cmap='viridis', s=1)
+plt.scatter(YOH.flatten()[indices], T.flatten()[indices], c=colors.flatten()[indices], cmap='viridis', s=1)
 plt.xlabel("YOH")
 plt.ylabel("Temperature (K)")
 plt.title("K-means Clustering in Temperature vs YOH Space")
