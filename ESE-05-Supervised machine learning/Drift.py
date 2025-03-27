@@ -30,7 +30,7 @@ with open("ESE-05-Supervised machine learning/dataset/dataset.pkl", "rb") as f:
 # Extract data from the first batch
 batch1 = data.where(data["batch_id"] == 1).dropna()
 batch1_y = batch1["gas_class"].to_numpy()
-batch1_X = batch1[batch1.columns[:-5]].to_numpy()
+batch1_X = batch1[batch1.columns[:-5]].to_numpy() # Exclude metadata columns
 
 # Split the dataset into training and testing sets
 from sklearn.model_selection import train_test_split
@@ -41,7 +41,7 @@ from sklearn.ensemble import RandomForestClassifier
 model = RandomForestClassifier(n_estimators=1000, random_state=0)
 model.fit(X_train, y_train)
 
-# Evaluate the model on batch 1 test set
+# Evaluate the model on batch 1 test set using accuracy = correct / total
 from sklearn.metrics import accuracy_score
 y_pred = model.predict(X_test)
 accuracy = [accuracy_score(y_test, y_pred)]
