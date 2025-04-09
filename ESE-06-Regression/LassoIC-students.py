@@ -24,7 +24,7 @@ Data Structure
 import numpy as np
 # import ...
 
-# Load diabetes dataset
+# Load diabetes dataset from sklearn
 # X, y = ...
 
 # Add random features to make feature selection more relevant

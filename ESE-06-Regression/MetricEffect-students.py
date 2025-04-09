@@ -21,25 +21,24 @@ The code:
 # y = ...  
 
 # Create logarithmically spaced regularization parameters (lambda)
-n_lambdas = 200
 # lambdas = ...  # From 10^-10 to 10^-2
-
-coefs = []  # Will store coefficient values for each lambda
 
 # Define ridge regression cost function (L2 regularization)
 # Minimizes sum of squared errors + alpha * sum of squared weights
 # def loss(w, X, y, alpha):
     #return ...
 
+coefs = []  # Will store coefficient values for each lambda
 mse = []  # Will store mean squared error for each lambda
+
 #for l in lambdas:
     # Minimize the ridge regression loss function
     # Use scipy's minimize function to find the optimal weights, set tolerance to 1e-7: 
     # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html
     # res = ...
     
-    # Store the optimal weights
-    
+    # Store the optimal weights in coefs list
+
     # Compute and store the mean squared error (prediction error) and append to mse list
 
 

@@ -2,6 +2,7 @@
 import numpy as np
 # import ...
 
+# Set random seed for reproducibility
 np.random.seed(42)
 
 # Create x vector from 0 to 10
@@ -38,13 +39,13 @@ linear_test_errors = []
 #iterate over polynomial degrees
 # for degree in ... :
     # create polynomial features
-    # check: https://numpy.org/doc/stable/reference/generated/numpy.vander.html
+    # HINT: check https://numpy.org/doc/stable/reference/generated/numpy.vander.html
     # set increasing=True to get the polynomial in increasing order
     # X_train_poly = ...
     # X_test_poly = ...
 
     # Fit polynomial regression model
-    # check: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+    # HINT: check https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
     # model = ...
 
     # Fit the data
