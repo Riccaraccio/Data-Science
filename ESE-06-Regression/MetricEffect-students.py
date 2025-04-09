@@ -13,11 +13,11 @@ The code:
 # Add the necessary imports
 # import ...
 
-# Create Hilbert matrix as input data (known to be ill-conditioned)
+# Create 10x10 Hilbert matrix as input data (known to be ill-conditioned)
 # This matrix has elements X[i,j] = 1/(i+j+1)
 # X = ...
 
-# Target vector of all ones
+# Target vector of all ones shape(10,1)
 # y = ...  
 
 # Create logarithmically spaced regularization parameters (lambda)
