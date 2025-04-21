@@ -1,7 +1,29 @@
+"""Wine Type Classification using Neural Networks.
+
+This code performs multi-class classification on the wine dataset by:
+1. Loading the standard wine dataset from scikit-learn
+2. Creating a neural network with mixed SELU and ReLU activations
+3. Training the model to identify three different wine types
+4. Evaluating classification accuracy on test data
+5. Generating a confusion matrix to analyze classification performance
+
+The program demonstrates how a neural network can effectively classify
+wine samples into three distinct categories based on their chemical properties,
+with detailed error analysis through confusion matrix visualization.
+
+Data Structure
+-------------
+- X: Chemical analysis measurements of wine samples
+- y: One-hot encoded wine type labels (3 classes)
+- y_pred: Neural network class probability predictions
+- y_pred_classes: Final predicted class for each wine sample
+- confusion_mat: Matrix showing correct and incorrect classifications by class
+"""
 import tensorflow as tf
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
+import numpy as np
 
 # Load the wine dataset
 wine_data, wine_target = load_wine(return_X_y=True)
@@ -17,10 +39,10 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # Define the neural network model
 net = tf.keras.models.Sequential([
-    tf.keras.Input(shape=(X_train.shape[1],)),  # Input layer with shape of the input data
-    tf.keras.layers.Dense(13, activation="selu"),  # Hidden layer with 13 units and selu activation
-    tf.keras.layers.Dense(5, activation="relu"),  # Hidden layer with 5 units and selu activation
-    tf.keras.layers.Dense(3, activation="softmax"),  # Output layer with 3 units
+   tf.keras.Input(shape=(X_train.shape[1],)),  # Input layer with shape of the input data
+   tf.keras.layers.Dense(13, activation="selu"),  # Hidden layer with 13 units and selu activation
+   tf.keras.layers.Dense(5, activation="relu"),  # Hidden layer with 5 units and relu activation
+   tf.keras.layers.Dense(3, activation="softmax"),  # Output layer with 3 units for wine types
 ])
 
 # Compile the model
@@ -33,7 +55,6 @@ net.fit(X_train, y_train, epochs=100, batch_size=16)
 loss, accuracy = net.evaluate(X_test, y_test)
 print(f"Test accuracy: {accuracy:.2f}")
 
-import numpy as np
 # Predict the classes for the test set
 y_pred = net.predict(X_test)
 y_pred_classes = np.argmax(y_pred, axis=1)
