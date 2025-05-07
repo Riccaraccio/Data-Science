@@ -32,6 +32,35 @@ a = 1.4  # Standard parameter value for chaotic behavior
 b = 0.3  # Standard parameter value for chaotic behavior
 n = 100  # Number of steps for each trajectory
 
+"""# Visualization: Generate a Henon map animation
+# Generate the Henon map
+fig, ax = plt.subplots()
+ax.set_xlim(-1.5, 1.5)
+ax.set_ylim(-1.5, 1.5)
+line, = ax.plot([], [], 'o', markersize=1, color='black')
+
+# Initial conditions
+X = [1]
+Y = [1]
+
+# Update function for the animation
+def update(frame):
+    global X, Y
+    if len(X) < n:
+        X.append(1 - a*X[-1]**2 + Y[-1])
+        Y.append(b*X[-2])
+        line.set_data(X, Y)
+    return line,
+
+ani = FuncAnimation(fig, update, frames=n, blit=True, interval=1)
+plt.show()
+
+plt.plot (range(1, n+1), X, '-o', markersize=1, color='black')
+plt.show()
+plt.plot (range(1, n+1), Y, '-o', markersize=1, color='red')
+plt.show()
+"""
+
 # Load the model if it exists, otherwise train it
 try:
     net = tf.keras.models.load_model('henon_map.keras')
