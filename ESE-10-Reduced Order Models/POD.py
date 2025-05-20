@@ -1,3 +1,28 @@
+"""Video Frame Decomposition and Reconstruction using SVD.
+This code performs reduced-order modeling on a video sequence by:
+
+Loading and animating frames from a numpy array file
+Flattening and centering the frames
+Performing Singular Value Decomposition (SVD)
+Visualizing spatial and temporal modes
+Reconstructing the video using a subset of modes
+Calculating and displaying the reconstruction error
+
+The program displays animations of the original video, visualizations of the
+dominant spatial modes, plots of temporal mode dynamics and their variance distribution,
+and a side-by-side comparison between the original video, reconstructed version, and
+pointwise error. SVD is used to extract the most important patterns in the video for
+efficient representation and dimensionality reduction.
+Data Structure
+
+frames_array: Original video frames stored in numpy array
+U, S, Vt: Results of SVD (spatial modes, singular values, temporal modes)
+reconstructed_frames: Video reconstructed using limited number of modes
+error: Pointwise difference between original and reconstructed frames
+"""
+import os
+os.chdir('ESE-10-Reduced Order Models')
+
 import numpy as np 
 import matplotlib.pyplot as plt
 
@@ -18,6 +43,12 @@ plt.ioff()
 # Flatten the frames array
 flattened_frames = frames_array.reshape(frames_array.shape[0], -1).T
 
+# Calculate the mean along axis 1 (across all frames)
+mean_frame = np.mean(flattened_frames, axis=1, keepdims=True)
+
+# Subtract the mean from each frame
+flattened_frames_centered = flattened_frames - mean_frame
+
 # Perform SVD on the flattened frames
 U, S, Vt = np.linalg.svd(flattened_frames, full_matrices=False)
 print("Shapes of U, S, Vt:", U.shape, S.shape, Vt.shape)
@@ -37,9 +68,6 @@ for i in range(n):
     axs[i].axis('off')
     axs[i].set_title(f"U[{i}]")
 
-plt.show()
-
-plt.imshow(np.diag(S))
 plt.show()
 
 # a(t) = S * Vt
@@ -82,7 +110,7 @@ reconstructed_frames = (U[:, :n] @ np.diag(S[:n]) @ Vt[:n, :])
 print("Reconstructed frames shape:", reconstructed_frames.shape)
 
 # calculate pointwise error
-error = (flattened_frames - reconstructed_frames)/flattened_frames
+error = np.abs(flattened_frames - reconstructed_frames)
 
 error = error.T.reshape(frames_array.shape)
 print("Error shape:", error.shape)
@@ -107,7 +135,7 @@ for i in range(reconstructed_frames.shape[0]):
     axs[1].axis('off')
     axs[1].set_title(f"Reconstructed video using {n} modes")
     
-    axs[2].imshow(error[i], vmax=1, vmin=0)
+    axs[2].imshow(error[i])
     axs[2].set_title("Error")
     
     plt.axis('off')
