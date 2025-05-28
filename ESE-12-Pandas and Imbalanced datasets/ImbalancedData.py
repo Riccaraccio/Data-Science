@@ -36,13 +36,14 @@ os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"  # Disable oneDNN optimizations for re
 
 import pandas as pd
 import numpy as np
-import seaborn as sns  # Statistical data visualization library
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils import resample  # For oversampling minority class
 from tensorflow import keras
 import tensorflow as tf
+
+tf.random.set_seed(0)  # Set random seed for reproducibility in TensorFlow
 
 # Load satellite telemetry data from Excel file
 # The dataset contains various sensor readings and operational parameters
@@ -210,16 +211,16 @@ plt.legend()
 plt.yscale('log')  # Log scale better shows convergence behavior
 plt.show()
 
-# Visualize training progress: Precision curves
-# Precision is critical for anomaly detection to minimize false alarms
-plt.plot(no_bias_history.history['precision'], label='Training Precision', color='b')
-plt.plot(no_bias_history.history['val_precision'], label='Validation Precision', linestyle='--', color='b')
-plt.plot(bias_history.history['precision'], label='Training Precision with Bias', color='r')
-plt.plot(bias_history.history['val_precision'], label='Validation Precision with Bias', linestyle='--', color='r')
+# Visualize training progress: recall curves
+# recall is critical for anomaly detection to minimize false alarms
+plt.plot(no_bias_history.history['recall'], label='Training recall', color='b')
+plt.plot(no_bias_history.history['val_recall'], label='Validation recall', linestyle='--', color='b')
+plt.plot(bias_history.history['recall'], label='Training recall with Bias', color='r')
+plt.plot(bias_history.history['val_recall'], label='Validation recall with Bias', linestyle='--', color='r')
 plt.xlabel('Epoch')
-plt.ylabel('Precision')
+plt.ylabel('recall')
 plt.legend()
-plt.ylim(0, 1)  # Set y-axis limits from 0 to 1 for precision
+plt.ylim(0, 1.1)  # Set y-axis limits from 0 to 1 for recall
 plt.show()
 
 # APPROACH 3: Class weighting to handle imbalance during training
@@ -307,16 +308,16 @@ plt.legend()
 plt.yscale('log')  # Log scale for better visualization of convergence patterns
 plt.show()
 
-# Plot training and validation precision for comparison between upsampled and weighted models
-# Precision is especially important in anomaly detection to minimize false positives
-plt.plot(upsampled_history.history['precision'], label='Training Precision (Upsampled)', color='g')
-plt.plot(upsampled_history.history['val_precision'], label='Validation Precision (Upsampled)', linestyle='--', color='g')
-plt.plot(weigth_model.history.history['precision'], label='Training Precision (Weighted)', color='m')
-plt.plot(weigth_model.history.history['val_precision'], label='Validation Precision (Weighted)', linestyle='--', color='m')
+# Plot training and validation recall for comparison between upsampled and weighted models
+# recall is especially important in anomaly detection to minimize false positives
+plt.plot(upsampled_history.history['recall'], label='Training recall (Upsampled)', color='g')
+plt.plot(upsampled_history.history['val_recall'], label='Validation recall (Upsampled)', linestyle='--', color='g')
+plt.plot(weigth_model.history.history['recall'], label='Training recall (Weighted)', color='m')
+plt.plot(weigth_model.history.history['val_recall'], label='Validation recall (Weighted)', linestyle='--', color='m')
 plt.xlabel('Epoch')
-plt.ylabel('Precision')
+plt.ylabel('recall')
 plt.legend()
-plt.ylim(0, 1)  # Constrain y-axis to valid precision range
+plt.ylim(0, 1.1)  # Constrain y-axis to valid recall range
 plt.show()
 
 # Summary of approaches implemented:
