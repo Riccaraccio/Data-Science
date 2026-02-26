@@ -26,20 +26,35 @@ The repository is organized into 12 main modules:
 
 
 ## Installation and Setup
+
+### Prerequisites
+- Python 3.10 or higher (recommended: Python 3.12)
+- conda (Anaconda or Miniconda)
+
+### Quick Start
+
 Clone the repository:
 ```bash
 git clone https://github.com/Riccaraccio/Data-Science.git
+cd Data-Science
 ```
 
-Create the **conda** environment
+Create and activate the **conda** environment:
 ```bash
-conda create -n datascience python=3.12
+conda create -n data-science python=3.12
+conda activate data-science
 ```
 
-Install within the conda environment the necessary packages
+### Installation Options
+Installs all required packages including PyTorch, scikit-learn, Jupyter, and visualization tools:
 ```bash
-conda activate datascience
-pip install .
+pip install -e .
+```
+
+### Launching Jupyter
+After installation, you can start JupyterNotebook for interactive work:
+```bash
+jupyter notebook
 ```
 
 ## Some useful material
