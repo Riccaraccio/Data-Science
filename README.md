@@ -27,6 +27,8 @@ The repository is organized into 12 main modules:
 
 ## Installation and Setup
 
+Consult also the detaield [**Installation guide**](docs/Installation_Guide_DSCE.pdf)
+
 ### Prerequisites
 - Python 3.10 or higher (recommended: Python 3.12)
 - conda (Anaconda or Miniconda)
