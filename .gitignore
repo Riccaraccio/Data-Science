@@ -3,3 +3,6 @@ data_science_chemical_engineering.egg-info/
 .ipynb_checkpoints
 .DS_Store
 *.pt
+*.html
+slides/
+teaching-script/
