@@ -9,7 +9,7 @@ This repository contains the materials shown during the practical sessions of th
 taught at Politecnico di Milano by Professor [Alessandro Stagni](https://www.creckmodeling.polimi.it/team/alessandro-stagni/).
 
 ## Course Structure
-The repository is organized into 12 main modules:
+The repository is organized into 11 main modules:
 
 1. [**Hands On Python**](practicals/01-Hands%20On%20Python/) - Introduction to Python programming
 2. [**SVD**](practicals/02-SVD/) - Singular Value Decomposition
@@ -22,7 +22,6 @@ The repository is organized into 12 main modules:
 9. [**Deep Learning**](practicals/09-Deep%20learning/) - Advanced neural network architectures
 10. [**Reduced Order Models**](practicals/10-Reduced%20Order%20Models/) - Model order reduction techniques
 11. [**Physics Informed Models**](practicals/11-Physics%20informed%20models/) - Integration of physical principles with data science
-12. [**Pandas and Imbalanced Datasets**](practicals/12-Pandas%20and%20Imbalanced%20datasets/) - Data manipulation and handling imbalanced data
 
 
 ## Installation and Setup
